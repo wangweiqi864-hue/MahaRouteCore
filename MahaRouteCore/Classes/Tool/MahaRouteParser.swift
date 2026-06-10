@@ -12,14 +12,12 @@ func mahaRouteLog<T>(_ message: T) {
 
 // 路由解析工具
 final class MahaRouteParser {
-    private static let routePrefix = "mh://"
     private static let httpPrefix = "http://"
     private static let httpsPrefix = "https://"
-
-    private static let routeTypeRegex = "^mh://(.*?)\\?"
     private static let pathRegex = "path\\s*=\\s*\\((.*?)\\)"
 
     static func parse(url: String) -> MahaRouteModel? {
+        let routePrefix = MahaRouteCenter.routeSchemePrefix
         if url.hasPrefix(routePrefix) == false {
             if url.hasPrefix(httpPrefix) || url.hasPrefix(httpsPrefix) {
                 return MahaRouteModel(type: .open, path: url, pageType: .h5)
@@ -35,7 +33,7 @@ final class MahaRouteParser {
         }
 
         if routeType == .open {
-            routeURL = routeURL.replacingOccurrences(of: "mh://\(routeType.rawValue)?", with: "")
+            routeURL = routeURL.replacingOccurrences(of: "\(routePrefix)\(routeType.rawValue)?", with: "")
 
             guard var path = parsePath(url: routeURL) else {
                 mahaRouteLog("parser--跳转失败--path不存在--\(routeURL)")
@@ -94,6 +92,8 @@ final class MahaRouteParser {
     }
 
     private static func parseType(url: String) -> MahaRouteActionType {
+        let routePrefix = NSRegularExpression.escapedPattern(for: MahaRouteCenter.routeSchemePrefix)
+        let routeTypeRegex = "^\(routePrefix)(.*?)\\?"
         if let type = match(message: url, pattern: routeTypeRegex)?.first {
             return MahaRouteActionType(rawValue: type) ?? .unavailable
         }

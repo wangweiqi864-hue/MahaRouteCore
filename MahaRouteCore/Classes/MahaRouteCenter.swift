@@ -7,6 +7,13 @@ import Foundation
 import UIKit
 
 open class MahaRouteCenter {
+    private static let defaultRouteSchemePrefix = "mh://"
+    public private(set) static var routeSchemePrefix = defaultRouteSchemePrefix
+
+    public static func configure(routeSchemePrefix: String) {
+        self.routeSchemePrefix = normalizedRouteSchemePrefix(routeSchemePrefix)
+    }
+
     @discardableResult
     /// 跳转路由
     /// - Parameters:
@@ -80,6 +87,17 @@ open class MahaRouteCenter {
 }
 
 extension MahaRouteCenter {
+    private static func normalizedRouteSchemePrefix(_ routeSchemePrefix: String) -> String {
+        let trimmedPrefix = routeSchemePrefix.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmedPrefix.isEmpty == false else {
+            return defaultRouteSchemePrefix
+        }
+        if trimmedPrefix.hasSuffix("://") {
+            return trimmedPrefix
+        }
+        return trimmedPrefix + "://"
+    }
+
     private func parse() -> Bool {
         if let routeModel = MahaRouteParser.parse(url: url) {
             mahaRouteLog("parser---解析success--\(routeModel.path)")
