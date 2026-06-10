@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'MahaRouteCore'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'A lightweight route parsing and dispatch core used by the app.'
 
   s.description      = <<-DESC
@@ -17,5 +17,5 @@ It keeps the current route parsing behavior while exposing renamed public APIs.
   s.swift_version = '5.0'
 
   s.source_files = 'MahaRouteCore/Classes/**/*'
-  s.dependency 'MHLog'
+  s.dependency 'MahaLogCore'
 end

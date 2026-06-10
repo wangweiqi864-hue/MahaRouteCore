@@ -13,12 +13,13 @@
 
 - Uses `mh://` as the default route protocol, but exposes a public configuration entry for the host app
 - Preserves full-screen H5, half-screen H5, and native page dispatch branches
-- Depends on `MHLog`
+- Depends on `MahaLogCore`
 
 ## Configuration
 
 ```swift
 MahaRouteCenter.configure(routeSchemePrefix: "maha://")
+MahaStorageManager.configure(rootDirectoryName: "/YourRoot/")
 ```
 
 ## Installation

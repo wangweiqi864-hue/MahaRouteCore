@@ -4,10 +4,10 @@
 //
 
 import Foundation
-import MHLog
+import MahaLogCore
 
 func mahaRouteLog<T>(_ message: T) {
-    // MHLog.log("[MahaRouteCore]---\(message)")
+    // MahaLog.record("[MahaRouteCore]---\(message)")
 }
 
 // 路由解析工具
